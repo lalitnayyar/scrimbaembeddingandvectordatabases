@@ -1,7 +1,11 @@
 import { openai, supabase } from './config.js';
 
 // Query about our movie data
-const query = "Which movie can I take my child to?";
+//const query = "Which movies can I take my child to?";
+//const query = "I feel like having a good laugh!";
+//const query = "Which movie will give me an adrenaline rush?";
+//const query = "What's the highest rated movie?";
+const query = "The movie with that actor from Castaway";
 main(query);
 
 async function main(input) {
@@ -19,14 +23,24 @@ async function createEmbedding(input) {
   return embeddingResponse.data[0].embedding;
 }
 
+/*
+  Challenge: Return and manage multiple matches
+    - Return at least 3 matches from the database table
+    - Combine all of the matching text into 1 string
+*/
+
 // Query Supabase and return a semantically matching text chunk
 async function findNearestMatch(embedding) {
   const { data } = await supabase.rpc('match_movies', {
     query_embedding: embedding,
     match_threshold: 0.50,
-    match_count: 1
+    match_count: 4
   });
-  return data[0].content;
+  
+  // Manage multiple returned matches
+  const match = data.map(obj => obj.content).join('\n');
+ // console.log(match);
+  return match;
 }
 
 // Use OpenAI to make the response conversational
