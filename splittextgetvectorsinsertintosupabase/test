@@ -1,0 +1,9 @@
+async function splitDocument(document) {
+  const text = await fs.readFile('movies.txt', 'utf8');
+  const splitter = new RecursiveCharacterTextSplitter({
+    chunkSize: 150,
+    chunkOverlap: 15,
+  });
+  const output = await splitter.createDocuments([text]);
+  return output;
+}
