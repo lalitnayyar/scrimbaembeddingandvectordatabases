@@ -6,7 +6,7 @@ async function main() {
     model: "text-embedding-ada-002",
     input: "Hello, world!",
   });
-  console.log(embedding);
+  console.log(embedding.data[0].embedding);
 }
 main();
 
