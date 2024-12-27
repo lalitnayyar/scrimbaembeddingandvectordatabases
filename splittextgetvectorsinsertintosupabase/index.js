@@ -9,9 +9,13 @@ const query = "The movie with that actor from Castaway";
 main(query);
 
 async function main(input) {
-  const embedding = await createEmbedding(input);
-  const match = await findNearestMatch(embedding);
-  await getChatCompletion(match, input);
+  try {
+    const embedding = await createEmbedding(input);
+    const match = await findNearestMatch(embedding);
+    await getChatCompletion(match, input);
+  } catch (err) {
+    console.error('Error in main function.', err)
+  }
 }
 
 // Create an embedding vector representing the query
