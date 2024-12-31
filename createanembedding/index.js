@@ -1,4 +1,4 @@
-import openai from './config.js';
+import { openai, supabase } from './config.js';
 
 const content = [
   "Beyond Mars: speculating life on distant planets.",
@@ -25,8 +25,10 @@ async function main(input) {
         });
         const data = { content: textChunk, embedding: embeddingResponse.data[0].embedding }
         console.log(data);  
+        await supabase.from('movies1').insert(data);
     })    
   );
+ 
   console.log('Embedding complete!');
 }
 main(content);

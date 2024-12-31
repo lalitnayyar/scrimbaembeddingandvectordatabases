@@ -35,7 +35,7 @@ async function createEmbedding(input) {
 
 // Query Supabase and return a semantically matching text chunk
 async function findNearestMatch(embedding) {
-  const { data } = await supabase.rpc('match_movies', {
+  const { data } = await supabase.rpc('match_movies1', {
     query_embedding: embedding,
     match_threshold: 0.50,
     match_count: 4
